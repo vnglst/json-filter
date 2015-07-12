@@ -1,12 +1,12 @@
-// Loads the IATE json terminology file (paramter 1)
+// Loads the IATE json terminology file (parameter 1)
 // Parses the first x objects it can find (parameter 2)
 // And logs the list of termEntries to the console
 //
 // How to use
-// node IATE-filter.js ../../data/IATE-terms.json > jq "." > IATE-nl-de.json
+// node json-filter.js ../data/IATE-2015.json > jq "." > IATE-nl-de.json
 //
 // # for testing:
-// node IATE-filter.js ../../data/IATE.json 100 | jq "."
+// node json-filter.js ../data/IATE-2015.json 100 | jq "."
 
 var fs = require('fs'),
 	JSONStream = require('JSONStream'),
@@ -75,11 +75,11 @@ parser.on('root', function(obj) {
 		termEntry.id = obj.id;
 
 		// subjectfield is a string of comma seperated numbers
-		var subjectFieldStr = obj.descripGrp.descrip["_"] || "";
+		var subjectFieldStr = obj.descripGrp.descrip._ || '';
 		// this should become an array of numbers
 		termEntry.subjectField = stringOfNumsToArr(subjectFieldStr);
 
-		termEntry.note = obj.descripGrp.note || ""; // empty string if no note
+		termEntry.note = obj.descripGrp.note || ''; // empty string if no note
 		termEntry.langSet = [];
 
 		// Add all Dutch + German terms
@@ -91,8 +91,8 @@ parser.on('root', function(obj) {
 					var someTerm = {};
 					someTerm.lang = element['xml:lang'];
 					someTerm.termStr = termObj.term;
-					someTerm.termNote = termObj.termNote["_"];
-					someTerm.relCode = termObj.descrip["_"];
+					someTerm.termNote = termObj.termNote._;
+					someTerm.relCode = termObj.descrip._;
 					// And add it to the langSet array
 					termEntry.langSet.push(someTerm);
 				});
@@ -101,8 +101,8 @@ parser.on('root', function(obj) {
 				var someTerm = {};
 				someTerm.lang = element['xml:lang'];
 				someTerm.termStr = element.tig.term;
-				someTerm.termNote = element.tig.termNote["_"];
-				someTerm.relCode = element.tig.descrip["_"];
+				someTerm.termNote = element.tig.termNote._;
+				someTerm.relCode = element.tig.descrip_;
 				// Then add that term to the langSet array
 				termEntry.langSet.push(someTerm);
 			}
