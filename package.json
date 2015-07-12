@@ -1,0 +1,16 @@
+{
+  "name": "json-filter",
+  "version": "1.0.0",
+  "description": "filters json based on tbx",
+  "main": "json-filter.js",
+  "dependencies": {
+    "JSONStream": "^0.10.0",
+    "event-stream": "^3.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Koen van Gilst <koen@koenvangilst.nl> (http://koenvangilst.nl)",
+  "license": "ISC"
+}
